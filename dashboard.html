@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bathly - لوحة التحكم</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.js"
+      integrity="sha384-A97u3Qnt9GZHURO9YJZRe7VQgGUeFzcv6I1oIGnUTxQrCxnpQMwR0/G8F2zt9abZ"
+      crossorigin="anonymous"
+    ></script>
+    <script src="auth-config.js"></script>
+    <script src="dashboard.js" defer></script>
+  </head>
+  <body class="dashboard-locked">
+    <div
+      class="admin-login"
+      id="adminLogin"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="adminLoginTitle"
+    >
+      <form class="admin-login-card" id="adminLoginForm">
+        <div class="admin-login-mark">B</div>
+        <h1 id="adminLoginTitle">تسجيل دخول لوحة التحكم</h1>
+        <p id="adminLoginDescription">أدخل بريد مالك المتجر لإرسال رمز تحقق.</p>
+        <label for="adminEmail">البريد الإلكتروني</label>
+        <input
+          id="adminEmail"
+          name="email"
+          type="email"
+          autocomplete="username"
+          value="shehabmuo@gmail.com"
+          required
+        />
+        <div id="adminCodeField" hidden>
+          <label for="adminCode">رمز التحقق</label>
+          <input
+            id="adminCode"
+            name="code"
+            type="text"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            pattern="[0-9]{6,8}"
+            minlength="6"
+            maxlength="8"
+            disabled
+          />
+        </div>
+        <div class="admin-login-resend-row" id="adminResendRow" hidden>
+          <button
+            class="admin-resend-button"
+            id="adminResend"
+            type="button"
+            disabled
+          >
+            إعادة إرسال الرمز
+          </button>
+          <span id="adminResendTimer" aria-live="polite"></span>
+        </div>
+        <p
+          class="admin-login-status"
+          id="adminLoginStatus"
+          role="status"
+          aria-live="polite"
+        ></p>
+        <p class="admin-login-error" id="adminLoginError" role="alert"></p>
+        <button type="submit" id="adminLoginSubmit">إرسال رمز التحقق</button>
+        <a href="index.html">العودة إلى المتجر</a>
+      </form>
+    </div>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="index.html"
+        ><span class="brand-mark">B</span><strong>Bathly</strong></a
+      >
+      <nav class="side-nav" aria-label="القائمة الرئيسية">
+        <button
+          class="nav-item active"
+          type="button"
+          data-target="dashboardOverview"
+        >
+          <span class="nav-icon">▦</span><span>لوحة التحكم</span>
+        </button>
+        <button class="nav-item" type="button" data-target="ordersSection">
+          <span class="nav-icon">▣</span><span>الطلبات</span>
+        </button>
+        <button class="nav-item" type="button" data-target="productsSection">
+          <span class="nav-icon">◇</span><span>المنتجات</span>
+        </button>
+        <button class="nav-item" type="button" data-target="customersSection">
+          <span class="nav-icon">♙</span><span>العملاء</span>
+        </button>
+        <button class="nav-item" type="button" data-target="analyticsSection">
+          <span class="nav-icon">⌁</span><span>التحليلات</span>
+        </button>
+        <button
+          class="nav-item"
+          type="button"
+          data-target="promotionsSection"
+        >
+          <span class="nav-icon">◉</span><span>التسويق والعروض</span>
+        </button>
+        <button class="nav-item" type="button" data-target="reviewsSection">
+          <span class="nav-icon">✉</span><span>آراء العملاء</span>
+        </button>
+        <button class="nav-item" type="button" data-target="settingsSection">
+          <span class="nav-icon">⚙</span><span>الإعدادات</span>
+        </button>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="help-card" href="index.html#contact"
+          ><span>؟</span
+          ><span
+            ><strong>مركز المساعدة</strong><small>بيانات التواصل</small></span
+          ></a
+        >
+        <a class="store-link" href="index.html">← العودة إلى المتجر</a>
+      </div>
+    </aside>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <button
+          class="menu-button"
+          id="menuButton"
+          type="button"
+          aria-label="فتح القائمة"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <div class="search-box">
+          <span>⌕</span
+          ><input
+            id="globalSearch"
+            type="search"
+            placeholder="ابحث في لوحة التحكم..."
+          /><kbd>Ctrl K</kbd>
+        </div>
+        <div class="top-actions">
+          <button
+            class="icon-button"
+            id="themeButton"
+            type="button"
+            aria-label="تبديل المظهر"
+          >
+            ☀
+          </button>
+          <button class="add-button" id="addProductButton" type="button">
+            <span>＋</span><span>إضافة جديد</span>
+          </button>
+          <button class="icon-button" id="logoutButton" type="button">
+            خروج
+          </button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <div class="page-heading" id="dashboardOverview">
+          <div>
+            <p class="eyebrow" id="todayLabel"></p>
+            <h1>مرحبًا بك في لوحة Bathly <span>👋</span></h1>
+          </div>
+          <div class="period-picker">
+            <button id="periodButton" type="button">
+              <span>▣</span><b id="periodText">آخر 30 يومًا</b><span>⌄</span>
+            </button>
+            <div class="period-menu" id="periodMenu">
+              <button type="button">آخر 7 أيام</button
+              ><button type="button">آخر 30 يومًا</button
+              ><button type="button">آخر 3 أشهر</button
+              ><button type="button">هذا العام</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-head">
+              <span class="stat-icon violet">$</span
+              ><span class="trend up" id="salesTrend">0.0%</span>
+            </div>
+            <p>إجمالي المبيعات</p>
+            <strong id="salesTotal">0 <small>ر.س</small></strong>
+            <div class="mini-bars" id="salesBars">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-head">
+              <span class="stat-icon blue">▣</span
+              ><span class="trend up" id="ordersTrend">0.0%</span>
+            </div>
+            <p>الطلبات</p>
+            <strong id="ordersTotal">0</strong>
+            <div class="progress-track"><span id="ordersProgress"></span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-head">
+              <span class="stat-icon orange">♙</span
+              ><span class="trend up" id="customersTrend">0.0%</span>
+            </div>
+            <p>العملاء</p>
+            <strong id="customersTotal">0</strong>
+            <div class="avatar-stack" id="customerAvatars"></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-head">
+              <span class="stat-icon pink">◷</span
+              ><span class="trend up" id="averageTrend">0.0%</span>
+            </div>
+            <p>متوسط قيمة الطلب</p>
+            <strong id="averageOrder">0 <small>ر.س</small></strong>
+            <div class="stat-foot">
+              <span>عدد المنتجات</span><strong id="productCount">0</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="content-grid" id="analyticsSection">
+          <article class="panel sales-panel">
+            <div class="panel-header">
+              <div>
+                <h2>مبيعات المتجر</h2>
+                <p>نظرة عامة على أداء المبيعات</p>
+              </div>
+              <div class="chart-legend">
+                <span><i class="purple-dot"></i>المبيعات</span
+                ><span><i class="gray-dot"></i>الطلبات</span>
+              </div>
+            </div>
+            <div class="chart">
+              <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i></div>
+              <svg viewBox="0 0 700 220" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#955b5b" stop-opacity=".25" />
+                    <stop offset="1" stop-color="#955b5b" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path
+                  class="area"
+                  d="M0 180 C55 170,70 130,115 145 S180 175,230 125 S300 78,350 100 S420 145,470 95 S535 65,580 82 S650 45,700 62 L700 220 L0 220Z"
+                />
+                <path
+                  class="line"
+                  d="M0 180 C55 170,70 130,115 145 S180 175,230 125 S300 78,350 100 S420 145,470 95 S535 65,580 82 S650 45,700 62"
+                />
+                <circle cx="470" cy="95" r="5" />
+              </svg>
+              <div class="chart-tooltip" id="chartTooltip">
+                <strong id="chartTotal">0 ر.س</strong
+                ><span id="chartDate">لا توجد مبيعات</span>
+              </div>
+            </div>
+          </article>
+          <article class="panel category-panel">
+            <div class="panel-header">
+              <div>
+                <h2>المبيعات حسب الفئة</h2>
+                <p>توزيع مبيعات الفترة المحددة</p>
+              </div>
+            </div>
+            <div class="donut-area">
+              <div class="donut" id="salesDonut">
+                <div>
+                  <strong id="donutTotal">0</strong><span>إجمالي المبيعات</span>
+                </div>
+              </div>
+            </div>
+            <div class="category-list" id="categoryList">
+              <div>
+                <span><i class="cat-a"></i>إكسسوارات الحمام</span
+                ><strong>0%</strong>
+              </div>
+              <div>
+                <span><i class="cat-b"></i>المناشف والأقمشة</span
+                ><strong>0%</strong>
+              </div>
+              <div>
+                <span><i class="cat-c"></i>الأدوات الذكية</span
+                ><strong>0%</strong>
+              </div>
+              <div>
+                <span><i class="cat-d"></i>التجميل والعناية</span
+                ><strong>0%</strong>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="bottom-grid">
+          <article class="panel orders-panel" id="ordersSection">
+            <div class="panel-header">
+              <div>
+                <h2>آخر الطلبات</h2>
+                <p>آخر المعاملات المحفوظة</p>
+              </div>
+              <button class="text-button" id="viewAllOrders" type="button">
+                عرض كل الطلبات
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>رقم الطلب</th>
+                    <th>العميل</th>
+                    <th>المنتج</th>
+                    <th>المبلغ</th>
+                    <th>الحالة</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#1048</td>
+                    <td>
+                      <span class="customer"><i>ن</i>نورة الحربي</span>
+                    </td>
+                    <td>طقم مناشف فاخر</td>
+                    <td><strong>450 ر.س</strong></td>
+                    <td><span class="status completed">مكتمل</span></td>
+                  </tr>
+                  <tr>
+                    <td>#1047</td>
+                    <td>
+                      <span class="customer"
+                        ><i class="warm">م</i>محمد العتيبي</span
+                      >
+                    </td>
+                    <td>سلة حمام ذكية</td>
+                    <td><strong>280 ر.س</strong></td>
+                    <td><span class="status processing">قيد المعالجة</span></td>
+                  </tr>
+                  <tr>
+                    <td>#1046</td>
+                    <td>
+                      <span class="customer"
+                        ><i class="blue-avatar">ع</i>عبدالله سالم</span
+                      >
+                    </td>
+                    <td>طقم إكسسوارات</td>
+                    <td><strong>320 ر.س</strong></td>
+                    <td><span class="status shipped">تم الشحن</span></td>
+                  </tr>
+                  <tr>
+                    <td>#1045</td>
+                    <td>
+                      <span class="customer"
+                        ><i class="pink-avatar">ل</i>لينا منصور</span
+                      >
+                    </td>
+                    <td>زجاجة صابون سيراميك</td>
+                    <td><strong>195 ر.س</strong></td>
+                    <td><span class="status completed">مكتمل</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="panel activity-panel">
+            <div class="panel-header">
+              <div>
+                <h2>النشاطات</h2>
+                <p>أحدث التحديثات</p>
+              </div>
+            </div>
+            <div class="activity-list" id="activityList">
+              <div>
+                <span class="activity-icon purple">●</span>
+                <p>
+                  <strong>لا توجد نشاطات بعد</strong
+                  ><small>ستظهر المبيعات والعمليات هنا</small>
+                </p>
+                <time>الآن</time>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel dashboard-section" id="productsSection">
+          <div class="panel-header">
+            <div>
+              <h2>منتجات المتجر</h2>
+              <p>المنتجات والصور المنشورة للعملاء</p>
+            </div>
+            <button class="text-button" id="addProductFromList" type="button">
+              إضافة منتج
+            </button>
+          </div>
+          <p
+            class="dashboard-data-status"
+            id="productsLoadStatus"
+            role="status"
+            aria-live="polite"
+          >
+            جاري تحميل المنتجات...
+          </p>
+          <div class="table-wrap">
+            <table id="adminProductsTable">
+              <thead>
+                <tr>
+                  <th>الصورة</th>
+                  <th>المنتج</th>
+                  <th>الفئة</th>
+                  <th>السعر</th>
+                  <th>المخزون</th>
+                  <th>الخصم</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel dashboard-section" id="customersSection">
+          <div class="panel-header">
+            <div>
+              <h2>العملاء</h2>
+              <p>العملاء المسجلون في بيانات مبيعات هذا المتصفح</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table id="customersTable">
+              <thead>
+                <tr>
+                  <th>العميل</th>
+                  <th>عدد الطلبات</th>
+                  <th>إجمالي المشتريات</th>
+                </tr>
+              </thead>
+              <tbody id="customersBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel dashboard-section" id="promotionsSection">
+          <div class="panel-header">
+            <div>
+              <h2>التسويق والعروض</h2>
+              <p>اختر منتجات المتجر وصورها، وحدد السعر الخاص للمجموعة</p>
+            </div>
+          </div>
+          <form class="promotion-form" id="promotionForm">
+            <label for="promotionTitle">عنوان العرض</label>
+            <input
+              id="promotionTitle"
+              name="title"
+              type="text"
+              maxlength="120"
+              placeholder="مثال: خصم 20% على جميع المنتجات"
+              required
+            />
+            <label for="promotionDescription">تفاصيل العرض</label>
+            <textarea
+              id="promotionDescription"
+              name="description"
+              maxlength="500"
+              rows="3"
+              placeholder="اكتب تفاصيل العرض ومدته"
+            ></textarea>
+            <label for="promotionPrice">سعر العرض للمجموعة (ر.س)</label>
+            <input
+              id="promotionPrice"
+              name="offer_price"
+              type="number"
+              min="0.01"
+              step="0.01"
+              placeholder="مثال: 150"
+              required
+            />
+            <fieldset class="promotion-product-fieldset">
+              <legend>اختر منتجات العرض من المخزون</legend>
+              <div
+                class="promotion-product-options"
+                id="promotionProductOptions"
+              ></div>
+            </fieldset>
+            <button class="add-button" id="savePromotionButton" type="submit">
+              إضافة العرض
+            </button>
+            <p
+              class="promotion-status"
+              id="promotionFormStatus"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
+          <p
+            class="dashboard-data-status"
+            id="promotionsLoadStatus"
+            role="status"
+            aria-live="polite"
+          >
+            جاري تحميل العروض...
+          </p>
+          <div class="admin-promotion-list" id="adminPromotionList"></div>
+        </section>
+
+        <section class="panel dashboard-section" id="reviewsSection">
+          <div class="panel-header">
+            <div>
+              <h2>إدارة آراء العملاء</h2>
+              <p>راجع الرسائل واحذف الآراء غير المناسبة</p>
+            </div>
+          </div>
+          <p
+            class="dashboard-data-status"
+            id="reviewsLoadStatus"
+            role="status"
+            aria-live="polite"
+          >
+            جاري تحميل الآراء...
+          </p>
+          <div class="table-wrap">
+            <table id="adminReviewsTable">
+              <thead>
+                <tr>
+                  <th>الاسم</th>
+                  <th>الرأي</th>
+                  <th>التاريخ</th>
+                  <th>الإجراء</th>
+                </tr>
+              </thead>
+              <tbody id="adminReviewsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel dashboard-section" id="settingsSection">
+          <div class="panel-header">
+            <div>
+              <h2>إعدادات الحساب</h2>
+              <p>الحساب المصرح له بإدارة المتجر</p>
+            </div>
+          </div>
+          <div class="settings-details">
+            <div>
+              <span>البريد الإداري</span><strong>shehabmuo@gmail.com</strong>
+            </div>
+            <div>
+              <span>مصدر المنتجات والصور</span><strong>Supabase</strong>
+            </div>
+            <a href="index.html">فتح واجهة المتجر</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="modal" id="addModal">
+      <form id="addForm">
+        <div class="modal-head">
+          <div>
+            <h2>إضافة منتج جديد</h2>
+            <p>أدخل بيانات المنتج وصورته</p>
+          </div>
+          <button class="modal-close" type="button" aria-label="إغلاق">
+            ×
+          </button>
+        </div>
+        <label
+          >اسم المنتج<input
+            name="name"
+            required
+            maxlength="120"
+            placeholder="مثال: طقم مناشف فاخر"
+        /></label>
+        <label
+          >وصف المنتج<input
+            name="description"
+            maxlength="500"
+            placeholder="وصف مختصر للمنتج"
+        /></label>
+        <div class="form-row">
+          <label
+            >السعر<input
+              name="price"
+              type="number"
+              required
+              min="0"
+              step="0.01" /></label
+          ><label
+            >الكمية<input name="stock" type="number" required min="0" step="1"
+          /></label>
+        </div>
+        <label
+          >خصم المنتج (%)<input
+            name="discount_percent"
+            type="number"
+            min="0"
+            max="100"
+            step="0.01"
+            value="0"
+        /></label>
+        <label
+          >الفئة<select name="category">
+            <option>إكسسوارات الحمام</option>
+            <option>المناشف والأقمشة</option>
+            <option>الأدوات الذكية</option>
+            <option>التجميل والعناية</option>
+          </select></label
+        >
+        <label
+          >صورة المنتج (JPG أو PNG أو WebP، حتى 5 MB)<input
+            id="productImage"
+            name="image"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            required
+        /></label>
+        <img
+          class="product-image-preview"
+          id="productImagePreview"
+          alt="معاينة صورة المنتج"
+          hidden
+        />
+        <p class="form-message" id="productFormMessage" role="alert"></p>
+        <div class="modal-actions">
+          <button class="cancel-button" type="button">إلغاء</button
+          ><button class="save-button" id="saveProductButton" type="submit">
+            حفظ المنتج
+          </button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

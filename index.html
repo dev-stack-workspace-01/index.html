@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Bathly - متجر إلكتروني لمنتجات العناية بالجسم والحمام، مع عروض وباقات شهرية." />
+    <meta name="author" content="Bathly" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#955b5b" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta property="og:title" content="Bathly | متجر العناية بالجسم والحمام" />
+    <meta property="og:description" content="اكتشف منتجات العناية بالجسم والحمام والعروض والباقات الشهرية من Bathly." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ar_SA" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.js"
+      integrity="sha384-A97u3Qnt9GZHURO9YJZRe7VQgGUeFzcv6I1oIGnUTxQrCxnpQMwR0/G8F2zt9abZ"
+      crossorigin="anonymous"
+    ></script>
+    <script src="auth-config.js"></script>
+    <script src="script.js" defer></script>
+    <title>Bathly | متجر العناية بالجسم والحمام</title>
+  </head>
+  <body>
+    <script>
+      window.SnipcartSettings = {
+        publicApiKey: "ODY1OWNjYTMtODZmNi00ZmFjLWFkOWUtYjExZDYxZDhlODdiNjM5MzEwMjA1NDAwMDE4NDUy",
+        version: "3.7.1",
+        currency: "sar",
+        loadStrategy: "on-user-interaction",
+        addProductBehavior: "none",
+      };
+
+      (function () {
+        var triggers = ["focus", "mouseover", "touchmove", "scroll", "keydown"];
+        var loaded = false;
+        window.LoadSnipcart = loadSnipcart;
+        document.readyState === "loading"
+          ? document.addEventListener("DOMContentLoaded", registerTriggers)
+          : registerTriggers();
+
+        function registerTriggers() {
+          triggers.forEach(function (eventName) {
+            document.addEventListener(eventName, loadSnipcart);
+          });
+          setTimeout(loadSnipcart, 2750);
+        }
+
+        function loadSnipcart() {
+          if (loaded) return;
+          loaded = true;
+          var settings = window.SnipcartSettings;
+          var container = document.querySelector("#snipcart");
+          var script = document.querySelector('script[src^="https://' + (settings.domain || "cdn.snipcart.com") + '"][src$="snipcart.js"]');
+          var stylesheet = document.querySelector('link[href^="https://' + (settings.domain || "cdn.snipcart.com") + '"][href$="snipcart.css"]');
+          if (!container) {
+            container = document.createElement("div");
+            container.id = "snipcart";
+            container.hidden = true;
+            document.body.appendChild(container);
+          }
+          container.dataset.apiKey = settings.publicApiKey;
+          container.dataset.configAddProductBehavior = settings.addProductBehavior;
+          if (settings.currency) {
+            container.dataset.currency = settings.currency;
+          }
+          if (!script) {
+            script = document.createElement("script");
+            script.src = "https://" + (settings.domain || "cdn.snipcart.com") +
+              "/themes/v" + (settings.version || "3.0") + "/default/snipcart.js";
+            script.integrity = "sha384-apsuWHDzKdJCxYnLSgoTRcmpTyPV8oTK+MpacZwW3x3gK8imc91WBqcfqcgCFcCe";
+            script.crossOrigin = "anonymous";
+            script.async = true;
+            document.head.appendChild(script);
+          }
+          if (!stylesheet && settings.loadCSS !== false) {
+            stylesheet = document.createElement("link");
+            stylesheet.rel = "stylesheet";
+            stylesheet.href = "https://" + (settings.domain || "cdn.snipcart.com") +
+              "/themes/v" + (settings.version || "3.0") + "/default/snipcart.css";
+            stylesheet.integrity = "sha384-2CFYVwYM/ovGGbUAeG1VSq3vHWwqAaYiMcvqdfmDxMeaYVUR0iLklfXbqRpof3wm";
+            stylesheet.crossOrigin = "anonymous";
+            document.head.appendChild(stylesheet);
+          }
+          triggers.forEach(function (eventName) {
+            document.removeEventListener(eventName, loadSnipcart);
+          });
+        }
+      })();
+    </script>
+    <header id="top">
+      <div class="top-bar">
+        <a href="#top" class="logo-btn" aria-label="Bathly - الصفحة الرئيسية">
+<span class="actual-text">&nbsp;Bathly&nbsp;</span>
+          <span aria-hidden="true" class="hover-text">&nbsp;Bathly&nbsp;</span>
+        </a>
+        <nav aria-label="التنقل الرئيسي">
+          <ul class="nav-icon-list">
+            <li><a href="#products" class="nav-icon-btn" title="المنتجات" aria-label="المنتجات">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span>المنتجات</span>
+            </a></li>
+            <li><a href="#contact" class="nav-icon-btn" title="اتصل بنا" aria-label="اتصل بنا">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+              <span>اتصل بنا</span>
+            </a></li>
+            <li><button class="nav-icon-btn" id="loginButton" type="button" aria-label="تسجيل الدخول">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>
+              <span>دخول</span>
+            </button></li>
+          </ul>
+        </nav>
+        <form class="search-bar" role="search">
+          <label class="sr-only" for="product-search">ابحث عن المنتجات</label>
+          <input id="product-search" type="search" placeholder="ابحث عن المنتجات..." />
+          <button type="submit">بحث</button>
+        </form>
+        <a class="dashboard-link" id="adminDashboardLink" href="dashboard.html" hidden>لوحة التحكم</a>
+        <div class="cart-button">
+          <button id="cart-button" class="snipcart-checkout" type="button" aria-label="سلة التسوق" title="سلة التسوق">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+            <span class="cart-count snipcart-items-count" aria-hidden="true">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <dialog class="auth-dialog" id="loginDialog" aria-labelledby="loginTitle">
+      <div class="auth-dialog-header">
+        <div class="auth-brand-mark">B</div>
+        <button class="auth-close" id="loginClose" type="button" aria-label="إغلاق">×</button>
+      </div>
+      <h2 id="loginTitle">تسجيل الدخول</h2>
+      <p class="auth-description" id="loginDescription">أدخل بريدك الإلكتروني وسنرسل لك رمز تحقق.</p>
+      <form class="auth-form" id="loginForm">
+        <label for="loginEmail">البريد الإلكتروني</label>
+        <input id="loginEmail" type="email" autocomplete="email" placeholder="name@example.com" required />
+        <div id="loginCodeField" hidden>
+          <label for="loginCode">رمز التحقق</label>
+          <input id="loginCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,8}" minlength="6" maxlength="8" placeholder="أدخل رمز التحقق المرسل إلى بريدك" disabled />
+          <div class="auth-resend-row">
+            <button class="auth-resend" id="resendCodeBtn" type="button" disabled>إعادة إرسال الرمز</button>
+            <span class="auth-timer" id="resendTimer" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="auth-message" id="loginMessage" role="status" aria-live="polite"></p>
+        <button class="auth-submit" id="loginSubmit" type="submit">إرسال رمز التحقق</button>
+      </form>
+    </dialog>
+
+    <main>
+      <section class="hero">
+        <h1>مرحبًا بكم في Bathly</h1>
+        <p>لمنتجات  العناية بالجسم واسرار العناية بالطبيعه</p>
+        <a href="#products" class="shop-now">تسوق الآن</a>
+      </section>
+<section class="products" id="products">
+        <h2>منتجاتنا</h2>
+        <p class="search-status" id="products-status" role="status" aria-live="polite">جاري تحميل المنتجات...</p>
+        <p class="checkout-validation-status" id="checkoutValidationStatus" role="status" aria-live="polite"></p>
+        <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
+        <div class="product-list" aria-live="polite"></div>
+      </section>
+
+      <section class="promotions" id="promotions">
+        <h2>العروض الترويجية</h2>
+        <p class="promotion-status" id="promotionsStatus" role="status" aria-live="polite">جاري تحميل العروض...</p>
+        <div class="promotion-list" id="promotionList"></div>
+      </section>
+
+      <section class="ai-assistant">
+        <h2>مساعد الذكاء الاصطناعي</h2>
+        <p>استخدم مساعدنا الذكي لمساعدتك في العثور على المنتجات المناسبة لك.</p>
+        <form><label class="sr-only" for="ai-question">سؤال المساعد الذكي</label><input id="ai-question" type="text" placeholder="اسأل مساعد الذكاء الاصطناعي..." required /><button type="submit">اسأل</button></form>
+        <div class="ai-response"><p>إجابات مساعد الذكاء الاصطناعي ستظهر هنا.</p></div>
+      </section>
+
+      <section class="customer-reviews" id="reviews">
+        <h2>آراء العملاء</h2>
+        <p>شاركنا تجربتك، وستظهر رسالتك في المحادثة بعد إرسالها.</p>
+        <div class="review-chat">
+          <div
+            class="review-messages"
+            id="reviewMessages"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+          ></div>
+          <p class="review-status" id="reviewsStatus" role="status" aria-live="polite">
+            جاري تحميل الآراء...
+          </p>
+          <form class="review-form" id="reviewForm">
+            <label for="reviewName">اسمك (اختياري)</label>
+            <input
+              id="reviewName"
+              name="display_name"
+              type="text"
+              maxlength="40"
+              autocomplete="name"
+              placeholder="اسمك أو اتركه فارغًا"
+            />
+            <label for="reviewContent">رأيك</label>
+            <textarea
+              id="reviewContent"
+              name="content"
+              rows="3"
+              minlength="3"
+              maxlength="500"
+              placeholder="اكتب رأيك عن تجربتك..."
+              required
+            ></textarea>
+            <p class="review-status" id="reviewFormStatus" role="status" aria-live="polite"></p>
+            <button id="reviewSubmit" type="submit">إرسال الرأي</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="about" id="about"><h2>عن Bathly</h2><p>نحن نقدم أفضل المنتجات للحمام بأعلى جودة.</p></section>
+      <section class="contact" id="contact">
+        <h2>اتصل بنا وتابعنا</h2>
+        <p class="whatsapp-contact">تواصل معنا عبر واتساب: <a href="https://wa.me/251972459052" target="_blank" rel="noopener noreferrer">+251 972 459 052</a></p>
+        <h3 class="social-heading">تابعنا قريبًا على وسائل التواصل الاجتماعي</h3>
+        <div class="social-links"><span class="social-icon">فيسبوك</span><span class="social-icon">تويتر</span><span class="social-icon">إنستغرام</span></div>
+      </section>
+      <section class="membership" id="membership">
+        <h2>باقة Bathly الشهرية</h2>
+        <p>مستلزمات الحمام التي تحتاجها، نجهزها لك في باقة دورية حسب احتياج بيتك، مع عروض خاصة للمشتركين.</p>
+        <ul class="membership-benefits"><li>اختيار المنتجات المناسبة لك ولعائلتك</li><li>عروض وأسعار خاصة للأعضاء</li><li>تحديد موعد التوصيل عند الاتفاق</li></ul>
+        <a class="subscription-cta" href="https://wa.me/251972459052" target="_blank" rel="noopener noreferrer">اشترك الآن</a>
+        <p class="subscription-note">نتفق معك على المنتجات والسعر وموعد التوصيل قبل تأكيد الاشتراك والدفع.</p>
+      </section>
+    </main>
+    <footer><p>جميع الحقوق محفوظة &copy; 2026 Bathly</p></footer>
+  </body>
+</html>

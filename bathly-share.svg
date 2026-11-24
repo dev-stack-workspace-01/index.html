@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Bathly</title>
+  <desc id="description">بطاقة مشاركة لمتجر Bathly لمنتجات العناية بالجسم والحمام</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffaf8"/>
+      <stop offset="1" stop-color="#f2e7e5"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a86e6e"/>
+      <stop offset="1" stop-color="#744747"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <circle cx="1020" cy="90" r="220" fill="#ead7d4" opacity=".55"/>
+  <circle cx="145" cy="590" r="235" fill="#ead7d4" opacity=".45"/>
+  <path d="M0 500c225-105 375-63 570 15s400 91 630-5v120H0Z" fill="#955b5b" opacity=".08"/>
+  <g transform="translate(600 245)">
+    <rect x="-68" y="-120" width="136" height="136" rx="38" fill="url(#mark)"/>
+    <path d="M-25-91h48c30 0 47 15 47 39 0 17-9 29-24 35 20 5 32 19 32 39 0 28-21 45-54 45h-49Zm31 25v38h14c14 0 22-7 22-20 0-12-8-18-22-18Zm0 62v45h19c16 0 25-8 25-22s-9-23-25-23Z" fill="#fff" transform="translate(0 -20) scale(.72)"/>
+    <text x="0" y="105" text-anchor="middle" fill="#744747" font-family="Arial, sans-serif" font-size="82" font-weight="700" letter-spacing="10">Bathly</text>
+    <text x="0" y="160" text-anchor="middle" fill="#6b5555" font-family="Arial, sans-serif" font-size="30">منتجات العناية بالجسم والحمام</text>
+  </g>
+  <path d="M100 78h92M100 78v92M1100 552h-92m92 0v-92" fill="none" stroke="#955b5b" stroke-linecap="round" stroke-width="4" opacity=".45"/>
+</svg>
